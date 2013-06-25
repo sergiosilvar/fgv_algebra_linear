@@ -12,15 +12,19 @@ solve_random <- function(n){
   return(system.time(solve(A,b)))
 }
 
-executar <- function(){
-  n <- 2^c(4:13)
-  t = sapply(n, function(n) solve_random(n))
-  t = t[3,]
-  plot(log2(n),log2(t),type='b' )
-  return(t)
-}
+
 
 # INÍCIO DO PROGRAMA.
+n <- 2^c(5:13)
+t = sapply(n, function(n) solve_random(n))
+t = t[3,]
+plot(log2(n),log2(t),type='b' )
 
-executar()
+# Regressao linear para determinar inclinação.
+# Fonte: http://www.cyclismo.org/tutorial/R/linearLeastSquares.html
+fit = lm(t ~ n)
+On = fit$coefficients[[2]] # Inclinação é a complexidade.
+
+print(On)
+
 
